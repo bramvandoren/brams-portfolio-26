@@ -28,20 +28,6 @@ De site combineert strakke UI-elementen en soepele animaties, geoptimaliseerd vo
 *   **Styling:** Tailwind CSS
 *   **Animaties:** Framer Motion
 *   **Icons:** Lucide React
-
-## 📂 Mappenstructuur
-
-```text
-/src
-  ├── /components    # Herbruikbare UI componenten (Navbar, Footer, etc.)
-  ├── /data          # Statische data (projecten lijst, teksten)
-  ├── /ui            # Kleine UI elementen (Buttons, Toggles)
-  └── main.jsx       # Entry point
-/public
-  ├── /models        # 3D modellen (.glb / .gltf)
-  ├── cv.pdf         # Downloadbaar CV
-  └── sitemap.xml    # SEO
-
   
 📬 Contact
 Bram Van Doren - Creative Developer
