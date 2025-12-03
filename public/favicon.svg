@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    text {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-weight: 900;
+    }
+  </style>
+  <rect width="100" height="100" rx="25" fill="#111827" />
+
+  <text x="50%" y="55%" 
+        dominant-baseline="middle" 
+        text-anchor="middle" 
+        fill="#ffffff" 
+        font-size="65">
+    b
+  </text>
+  <circle cx="75" cy="75" r="8" fill="#3b82f6" />
+</svg>
