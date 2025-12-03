@@ -1,16 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, ArrowUpRight, CheckCircle, Send } from 'lucide-react';
-import { FaWhatsapp, FaFacebookF, FaInstagram } from 'react-icons/fa'; // Zorg dat je deze icons hebt
+import { FaWhatsapp, FaFacebookF, FaInstagram } from 'react-icons/fa'; 
 import emailjs from 'emailjs-com';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { ArrowRight, Loader2 } from 'lucide-react';
 
-// Importeer je BentoCard component
 import BentoCard from '../components/ui/BentoCard';
 
-// --- HULP COMPONENT: SOCIAL CARD ---
-// Dit maakt het makkelijk om strakke, moderne kaarten te maken
 const SocialCard = ({ icon: Icon, title, subtitle, gradient, link }) => (
   <a 
     href={link} 
@@ -18,7 +15,6 @@ const SocialCard = ({ icon: Icon, title, subtitle, gradient, link }) => (
     rel="noreferrer" 
     className="group relative flex flex-col justify-between overflow-hidden rounded-2xl p-4 h-32 border border-black/5 dark:border-white/10 bg-white/50 dark:bg-white/5 transition-all hover:scale-[1.02]"
   >
-    {/* Verborgen Gradient die verschijnt bij hover */}
     <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${gradient}`} />
     
     <div className="relative z-10 flex justify-between items-start">
@@ -46,7 +42,11 @@ const Contact = () => {
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const recaptchaRef = useRef();
 
-  // Instellingen
+  // Bepaal het thema voor reCAPTCHA (hier mocken we het, in een echt project haal je dit uit een context/state)
+  // Voor nu gaan we ervan uit dat je body.dark class gebruikt voor donkere modus.
+  const isDarkMode = document.documentElement.classList.contains('dark');
+  const recaptchaTheme = isDarkMode ? 'dark' : 'light';
+
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '32479181167';
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hallo Bram, ik heb een vraag!')}`;
 
@@ -90,14 +90,14 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 max-w-6xl mx-auto">
+    <section id="contact" className="py-24 px-4 sm:px-4 lg:px-8 max-w-6xl mx-auto">
       <BentoCard className="bg-gradient-to-br from-gray-100 to-gray-200 border-white/50
                             dark:from-gray-900 dark:to-black dark:border-white/10 p-0 overflow-hidden">
         
         <div className="flex flex-col md:flex-row h-full">
           
           {/* LINKERKANT: INFO & SOCIALS */}
-          <div className="md:w-5/12 p-8 md:p-10 flex flex-col justify-between">
+          <div className="md:w-5/12 sm:px-4 lg:px-8 md:p-10 flex flex-col justify-between">
             <div>
               <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Contact.</h2>
               <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-8">
@@ -147,9 +147,13 @@ const Contact = () => {
           </div>
 
           {/* RECHTERKANT: FORMULIER */}
-          <div className="md:w-7/12 p-8 md:p-10 dark:bg-transparent">
+          <div className="md:w-7/12 sm:px-4 lg:px-8 md:p-10 dark:bg-transparent">
              <form onSubmit={handleSubmit} className="space-y-5 h-full flex flex-col justify-center">
-                <div className="grid grid-cols-2 gap-4">
+                {/* NIEUWE SUBTITEL VOOR FORMULIER MET PADDING */}
+                <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 mt-4 md:mt-0">Stuur een bericht</p> {/* mt-4 voor mobiel, md:mt-0 om het op desktop strak te houden */}
+
+                {/* AANGEPASTE GRID VOOR NAAM EN EMAIL - NU STACKED OP MOBILE */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4"> 
                   <div className="space-y-1">
                     <input 
                       type="text" name="name" placeholder="Naam" value={formData.name} onChange={handleChange}
@@ -186,7 +190,7 @@ const Contact = () => {
                 <div className="pt-2">
                    <ReCAPTCHA
                     ref={recaptchaRef}
-                    theme="dark"
+                    theme={recaptchaTheme}
                     sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                     onChange={(token) => { setRecaptchaToken(token); setErrors({...errors, recaptcha: ''}); }}
                   />
